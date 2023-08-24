@@ -1,4 +1,21 @@
 {
+  "lists": [
+    { "id": 1, "name": "Покупки", "colorId": 5 },
+    { "id": 2, "name": "Фронтенд", "colorId": 4 },
+    { "id": 2, "name": "Фильмы и сериалы", "colorId": 3 },
+    { "id": 3, "name": "Книги", "colorId": 2 },
+    { "id": 4, "name": "Личное", "colorId": 1 }
+  ],
+  "tasks": [
+    { "id": 1, "listId": 2, "text": "Изучить Javascript" },
+    { "id": 2, "listId": 2, "text": "Изучить паттерны проектирования" },
+    {
+      "id": 3,
+      "listId": 2,
+      "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)"
+    },
+    { "id": 4, "listId": 2, "text": "Redux (redux-observable, redux-saga)" }
+  ],
   "colors": [
     { "id": 1, "hex": "#C9D1D3", "name": "grey" },
     { "id": 2, "hex": "#42B883", "name": "green" },

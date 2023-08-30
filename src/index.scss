@@ -32,6 +32,7 @@
   &__tasks {
     flex: 1;
     padding: 60px;
+    overflow: auto;
   }
 }
 
@@ -42,6 +43,7 @@
   border: 0;
   padding: 10px 20px;
   cursor: pointer;
+  font-size: 14px;
 
   &:hover {
     background: darken(#4dd599, 10%);
@@ -49,11 +51,28 @@
   &:active {
     background: darken(#4dd599, 15%);
   }
+  &:disabled {
+    background: #d8d8d8;
+  }
+
+  &--grey {
+    background: #f4f6f8;
+    color: #9c9c9c;
+
+    &:hover {
+      background: darken(#f4f6f8, 3%);
+    }
+
+    &:active {
+      background: darken(#f4f6f8, 6%);
+    }
+  }
 }
 
 .field {
   box-sizing: border-box;
   background: #ffffff;
+  font-size: 14px;
   border: 1px solid #efefef;
   border-radius: 4px;
   padding: 8px 12px;

@@ -42,6 +42,71 @@ function App() {
     setLists(newList);
   };
 
+  const onEditTask = (listId, taskObj) => {
+    const newTaskText = prompt('Task text', taskObj.text);
+
+    if (!newTaskText) {
+      return;
+    }
+
+    const newList = lists.map((list) => {
+      if (list.id === listId) {
+        list.tasks = list.tasks.filter((task) => {
+          if (task.id === taskObj.id) {
+            task.text = newTaskText;
+          }
+          return task;
+        });
+      }
+      return list;
+    });
+    setLists(newList);
+    axios
+      .patch('http://localhost:3001/tasks/' + taskObj.id, {
+        text: newTaskText,
+      })
+      .catch(() => {
+        alert('Failed to edit the task');
+      });
+  };
+
+  const onRemoveTask = (listId, taskId) => {
+    if (window.confirm('Do you really want to delete the task?')) {
+      const newList = lists.map((item) => {
+        if (item.id === listId) {
+          item.tasks = item.tasks.filter((task) => task.id !== taskId);
+        }
+        return item;
+      });
+      setLists(newList);
+      axios.delete('http://localhost:3001/tasks/' + taskId).catch(() => {
+        alert('Failed to delete the task');
+      });
+    }
+  };
+
+  const onCompleteTask = (listId, taskId, completed) => {
+    const newList = lists.map((list) => {
+      if (list.id === listId) {
+        list.tasks = list.tasks.filter((task) => {
+          if (task.id === taskId) {
+            task.completed = completed;
+          }
+          return task;
+        });
+      }
+      return list;
+    });
+    setLists(newList);
+    axios
+      .patch('http://localhost:3001/tasks/' + taskId, {
+        completed,
+      })
+      .catch(() => {
+        alert('Failed to refresh the task');
+      });
+  };
+
   const onEditListTitle = (id, title) => {
     const newList = lists.map((item) => {
       if (item.id === id) {
@@ -69,7 +134,7 @@ function App() {
           }}
           items={[
             {
-              active: true,
+              active: location.pathname === '/',
               icon: <img src={listSvg} alt="List icon" />,
               name: 'All tasks',
             },
@@ -105,6 +170,9 @@ function App() {
                   key={list.id}
                   onAddTask={onAddTask}
                   onEditTitle={onEditListTitle}
+                  onRemoveTask={onRemoveTask}
+                  onEditTask={onEditTask}
+                  onCompleteTask={onCompleteTask}
                   list={list}
                   withoutEmpty
                 />
@@ -120,6 +188,9 @@ function App() {
                   onAddTask={onAddTask}
                   onEditTitle={onEditListTitle}
                   list={activeItem}
+                  onRemoveTask={onRemoveTask}
+                  onEditTask={onEditTask}
+                  onCompleteTask={onCompleteTask}
                 />
               )
             }
